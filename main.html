@@ -9,37 +9,33 @@
     <div id="output"></div>
     <script>
         function manipulateData() {
+            const initialArray = [1, 2, 3, 4];
+
             return new Promise((resolve) => {
                 setTimeout(() => {
-                    const numbers = [1, 2, 3, 4];
-                    resolve(numbers);
+                    resolve(initialArray);
                 }, 3000);
-            });
-        }
-
-        function filterEvens(arr) {
-            return new Promise((resolve) => {
+            })
+            .then((data) => {
+                const evenNumbers = data.filter(num => num % 2 === 0);
                 setTimeout(() => {
-                    const evens = arr.filter(num => num % 2 === 0);
-                    document.getElementById('output').textContent = evens.join(', ');
-                    resolve(evens);
+                    document.getElementById("output").textContent = evenNumbers.join(", ");
                 }, 1000);
+                return evenNumbers; // Return evenNumbers immediately
+            })
+            .then((evenNumbers) => {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        const multipliedNumbers = evenNumbers.map(num => num * 2);
+                        document.getElementById("output").textContent = multipliedNumbers.join(", ");
+                        resolve(); // Resolve the promise after updating the output
+                    }, 2000);
+                });
             });
         }
 
-        function multiplyEvens(arr) {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    const multiplied = arr.map(num => num * 2);
-                    document.getElementById('output').textContent = multiplied.join(', ');
-                    resolve(multiplied);
-                }, 2000);
-            });
-        }
-
-        manipulateData()
-            .then(filterEvens)
-            .then(multiplyEvens);
+        // Call the function
+        manipulateData();
     </script>
 </body>
 </html>
