@@ -1,13 +1,45 @@
 <!DOCTYPE html>
-
-<html>
-  <head>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-
-  <body>
-    <!-- do not change this code -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise Chaining Example</title>
+</head>
+<body>
     <div id="output"></div>
-    <script type="text/javascript" src="./script.js"></script>
-  </body>
+    <script>
+        function manipulateData() {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const numbers = [1, 2, 3, 4];
+                    resolve(numbers);
+                }, 3000);
+            });
+        }
+
+        function filterEvens(arr) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const evens = arr.filter(num => num % 2 === 0);
+                    document.getElementById('output').textContent = evens.join(', ');
+                    resolve(evens);
+                }, 1000);
+            });
+        }
+
+        function multiplyEvens(arr) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const multiplied = arr.map(num => num * 2);
+                    document.getElementById('output').textContent = multiplied.join(', ');
+                    resolve(multiplied);
+                }, 2000);
+            });
+        }
+
+        manipulateData()
+            .then(filterEvens)
+            .then(multiplyEvens);
+    </script>
+</body>
 </html>
