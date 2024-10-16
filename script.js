@@ -1,35 +1,27 @@
 //your JS code here. If required.
-function getNumbers() {
-    return new Promise((resolve) => {
+function manipulateArray(arr) {
+    return new Promise((resolve, reject) => {
         setTimeout(() => {
-            const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-            resolve(numbers);
+            resolve(arr);
         }, 3000);
+    })
+    .then(arr => {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(arr.filter(num => num % 2 === 0));
+            }, 1000);
+        });
+    })
+    .then(arr => {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(arr.map(num => num * 2));
+            }, 2000);
+        });
+    })
+    .then(arr => {
+        document.getElementById('output').textContent = arr.join(', ');
     });
 }
 
-function filterEvenNumbers(numbers) {
-    return new Promise((resolve) => {
-        const evenNumbers = numbers.filter(num => num % 2 === 0);
-        resolve(evenNumbers);
-    });
-}
-
-function multiplyByTwo(evenNumbers) {
-    return new Promise((resolve) => {
-        const multipliedNumbers = evenNumbers.map(num => num * 2);
-        resolve(multipliedNumbers);
-    });
-}
-
-function updateOutput(result) {
-    const outputElement = document.getElementById('output');
-    outputElement.textContent = `Final Result: ${result.join(', ')}`;
-}
-
-// Start the chain
-getNumbers()
-    .then(filterEvenNumbers)
-    .then(multiplyByTwo)
-    .then(updateOutput)
-    .catch(error => console.error('Error:', error));
+manipulateArray([1, 2, 3, 4]);
