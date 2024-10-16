@@ -1,27 +1,22 @@
 //your JS code here. If required.
-function manipulateArray(arr) {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve(arr);
-        }, 3000);
-    })
-    .then(arr => {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve(arr.filter(num => num % 2 === 0));
-            }, 1000);
-        });
-    })
-    .then(arr => {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve(arr.map(num => num * 2));
-            }, 2000);
-        });
-    })
-    .then(arr => {
-        document.getElementById('output').textContent = arr.join(', ');
-    });
-}
+describe('Manipulate Array Tests', () => {
+    beforeEach(() => {
+        // Visit the page where your script is loaded
+        cy.visit('path/to/your/index.html');
 
-manipulateArray([1, 2, 3, 4]);
+        // Call the manipulateArray function to start the process
+        cy.window().then((win) => {
+            win.manipulateArray(); // Ensure the function is called
+        });
+    });
+
+    it('should display even numbers after 1 second', () => {
+        cy.wait(4000); // Wait for 3s (initial delay) + 1s (filtering delay)
+        cy.get('#output').should('contain', 'Even Numbers: 2, 4');
+    });
+
+    it('should display multiplied numbers after an additional 2 seconds', () => {
+        cy.wait(6000); // Wait for 3s (initial delay) + 1s (filtering delay) + 2s (multiplication delay)
+        cy.get('#output').should('contain', 'Multiplied by 2: 4, 8');
+    });
+});
