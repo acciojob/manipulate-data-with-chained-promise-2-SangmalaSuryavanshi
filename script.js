@@ -1,22 +1,19 @@
-//your JS code here. If required.
-describe('Manipulate Array Tests', () => {
+describe('Manipulating Data with Promises', () => {
     beforeEach(() => {
-        // Visit the page where your script is loaded
-        cy.visit('path/to/your/index.html');
+        cy.visit('/main.html'); // Adjust to the correct path of your HTML file
 
-        // Call the manipulateArray function to start the process
         cy.window().then((win) => {
-            win.manipulateArray(); // Ensure the function is called
+            win.manipulateArray(); // Call the function from the window object
         });
     });
 
     it('should display even numbers after 1 second', () => {
-        cy.wait(4000); // Wait for 3s (initial delay) + 1s (filtering delay)
+        cy.wait(4000); // Total wait time for initial and filtering
         cy.get('#output').should('contain', 'Even Numbers: 2, 4');
     });
 
     it('should display multiplied numbers after an additional 2 seconds', () => {
-        cy.wait(6000); // Wait for 3s (initial delay) + 1s (filtering delay) + 2s (multiplication delay)
+        cy.wait(6000); // Total wait time for all processes
         cy.get('#output').should('contain', 'Multiplied by 2: 4, 8');
     });
 });
